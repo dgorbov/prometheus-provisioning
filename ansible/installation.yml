@@ -1,0 +1,8 @@
+---
+- hosts: 
+    - prometheus
+  vars_files:
+    - vars/basic.yml
+  roles:
+    - prometheus
+...
