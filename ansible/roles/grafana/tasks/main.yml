@@ -1,0 +1,23 @@
+- block:
+  - name: Add the Grafana signing key
+    apt_key:
+      url: https://packages.grafana.com/gpg.key
+      state: present
+
+  - name: Add the Grafana repository
+    apt_repository:
+      repo: deb https://packages.grafana.com/oss/deb stable main
+      state: present
+
+  - name: Install Grafana
+    apt:
+      name: grafana
+
+  - name: Start the Grafana service
+    systemd:
+      name: grafana-server
+      enabled: yes
+      state: started
+
+  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['architecture'] == 'x86_64'
+  become: yes
