@@ -1,0 +1,1 @@
+prometheus ansible_host=${PROMETHEUS_IP}
