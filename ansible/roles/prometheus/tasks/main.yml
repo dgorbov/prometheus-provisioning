@@ -1,5 +1,5 @@
 - block:
-  - name: Add prometheus user
+  - name: Add the Prometheus user
     user:
       name: prometheus
       shell: /sbin/nologin
@@ -52,7 +52,7 @@
     systemd:
       daemon_reload: yes
 
-  - name: Make the prometheus service enabled and started
+  - name: Make the Prometheus service enabled and started
     systemd:
       name: prometheus
       enabled: yes
