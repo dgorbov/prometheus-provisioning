@@ -1,0 +1,57 @@
+- block:
+  - name: Add thanos user
+    user:
+      name: thanos
+      shell: /sbin/nologin
+
+  - name: Download thanos
+    get_url:
+      url: "{{ thanos_link }}"
+      dest: /tmp/thanos.tar.gz
+      mode: '0440'
+    register: result
+    until: result is success
+    retries: 5
+    delay: 3
+
+  - name: Unarchive thanos
+    unarchive:
+      src: /tmp/thanos.tar.gz
+      dest: /usr/sbin/
+      owner: root
+      group: root
+      mode: '0644'
+      remote_src: yes
+      extra_opts:
+      - --strip=1
+      - --wildcards
+      - '*/thanos'
+
+  - name: Copy the thanos unit file
+    copy:
+      src: thanos.service
+      dest: /etc/systemd/system
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Copy the thanos environment file
+    copy:
+      src: sysconfig.thanos
+      dest: /etc/default/thanos
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Force systemd to reread configs
+    systemd:
+      daemon_reload: yes
+
+  - name: Make the thanos service enabled and started
+    systemd:
+      name: thanos
+      enabled: yes
+      state: started
+      
+  when: ansible_facts['os_family'] == 'Debian' and ansible_facts['architecture'] == 'x86_64'
+  become: yes

@@ -1,8 +1,8 @@
 ---
 - hosts: 
     - prometheus
-
-  tasks:  
-  - name: Ping
-    ping:
+  vars_files:
+    - vars/basic.yml
+  roles:
+    - prometheus
 ...
