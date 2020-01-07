@@ -17,6 +17,7 @@ resource "aws_security_group" "prometheus_rules" {
     cidr_blocks = var.allowed_cidr
   }
 
+  # prometheus
   ingress {
     from_port   = 9090
     to_port     = 9090
@@ -24,13 +25,21 @@ resource "aws_security_group" "prometheus_rules" {
     cidr_blocks = var.allowed_cidr
   }
 
+  # grafana
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = var.allowed_cidr
   }
 
+  # alertmanager
+  ingress {
+    from_port   = 5100
+    to_port     = 5100
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_cidr
+  }
 }
 
 data "aws_ami" "ubuntu_latest" {
