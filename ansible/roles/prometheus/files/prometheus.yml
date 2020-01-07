@@ -29,27 +29,7 @@ scrape_configs:
     - targets: ['localhost:9090']
 
   - job_name: node
-    proxy_url: http://192.168.1.24:8080/
     static_configs:
-      - targets: ['postgres-host:9100', 'postgres-host:9187', 'nginx-host:9100']
-
-  - job_name: ec2-discovery
-    ec2_sd_configs:
-      - region: ap-south-1
-        access_key: AKIARJSAS44DTVSNTLZK
-        secret_key: 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
-        filters:
-          - name: tag:Environment
-            values:
-              - prod
-
-          - name: tag:Service
-            values:
-              - web
-    relabel_configs:
-      - source_labels: [__meta_ec2_public_ip]
-        regex: '(.*)'
-        target_label: __address__
-        replacement: '${1}:9100'
-      - source_labels: [__meta_ec2_tag_Name]
-        target_label: instance
+      - targets: 
+        - ip-172-31-21-168.eu-central-1.compute.internal:9100
+        - ip-172-31-21-168.eu-central-1.compute.internal:9187

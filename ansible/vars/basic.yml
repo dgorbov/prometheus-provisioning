@@ -1,3 +1,0 @@
-prometheus_link: https://github.com/prometheus/prometheus/releases/download/v2.15.1/prometheus-2.15.1.linux-amd64.tar.gz
-alertmanager_link: https://github.com/prometheus/alertmanager/releases/download/v0.20.0/alertmanager-0.20.0.linux-amd64.tar.gz
-thanos_link: https://github.com/thanos-io/thanos/releases/download/v0.9.0/thanos-0.9.0.linux-amd64.tar.gz
